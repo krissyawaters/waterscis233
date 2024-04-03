@@ -14,7 +14,7 @@ class TVMazeAPI
         if ($response->successful()) {
             $episodeData = $response->json();
             return collect($episodeData)->map(function ($episode) {
-                // Assuming Episode constructor accepts more parameters as per your commented-out code
+              
                 return new Episode(
                     $episode['name'],
                     $episode['image']['original'] ?? null,
