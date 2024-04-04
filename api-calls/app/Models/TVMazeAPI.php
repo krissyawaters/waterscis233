@@ -30,3 +30,4 @@ class TVMazeAPI
     }
 }
 
+
