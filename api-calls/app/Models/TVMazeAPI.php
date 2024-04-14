@@ -13,21 +13,22 @@ class TVMazeAPI
 
         if ($response->successful()) {
             $episodeData = $response->json();
-            return collect($episodeData)->map(function ($episode) {
-              
-                return new Episode(
-                    $episode['name'],
-                    $episode['image']['original'] ?? null,
-                    $episode['season'],
-                    $episode['number'],
-                    $episode['summary']
+            return collect($episodeData)->map(function ($episode) use ($showNumber) {
+                return Episode::firstOrCreate(
+                    //We use firstOrCreate to prevent duplicate entries
+                    [
+
+                        'name' => $episode['name'],
+                        'season' => $episode['season'],
+                        'episode' => $episode['number'],
+                        'image' => $episode['image']['original'] ?? null,
+                        'summary' => strip_tags($episode['summary']),
+                        'show_number' => $showNumber, 
+                    ]
                 );
             });
         } else {
-            
             return collect([]);
         }
     }
 }
-
-
