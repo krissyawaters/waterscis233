@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\TvMazeAPI; 
 use App\Models\Episode;
+use App\Http\Controllers\ProductController;
 
 Route::get('/load-episodes', function () {
     $showNumber = request('showNumber', 1); 
@@ -23,3 +24,5 @@ Route::get('/view-episodes', function (Illuminate\Http\Request $request) {
 
     return view('episodes.index')->with('episodes', $episodes);
 });
+
+Route::resource('products', ProductController::class);
