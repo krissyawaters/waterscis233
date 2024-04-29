@@ -1,14 +1,15 @@
 @extends('layouts.admin')
 
-@section('title', 'Create Product')
+@section('title', 'Edit Product')
 
 @section('content')
     <div class="container mt-4">
-        <h1>Create New Product</h1>
+        <h1>Edit Product</h1>
         @include('admin.products.errors')
-        <form method="POST" action="{{ route('admin.products.store') }}">
+        <form method="POST" action="{{ route('admin.products.update', $product->id) }}">
             @csrf
-            @include('admin.products.form')
+            @method('PUT')
+            @include('admin.products.form', ['product' => $product])
             <button type="submit" class="btn btn-primary">Submit</button>
             <a href="{{ route('admin.products.index') }}" class="btn btn-secondary">Cancel</a>
         </form>

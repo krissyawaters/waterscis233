@@ -12,15 +12,17 @@ class AdminProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();  
-        return view('admin.products.index', compact('products'));  
+        $products = Product::all();
+        return view('admin.products.index', compact('products'));
     }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('admin.products.create');
+        $product = new Product();
+        return view('admin.products.create', ['product' => $product]);
     }
 
     /**
@@ -28,25 +30,18 @@ class AdminProductController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'price' => 'required|numeric',
-            'description' => 'nullable',
-            'item_number' => 'required|unique:products',
-            'image' => 'nullable|url'
-        ]);
-    
+        $validatedData = $this->validatedData($request);
         Product::create($validatedData);
-    
-        return redirect()->route('admin.product.index')->with('success', 'Product created successfully!');
-    }
 
+        return redirect()->route('admin.products.index')->with('success', 'Product created successfully!');
+    }
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
+        $product = Product::findOrFail($id);
         return view('admin.products.show', compact('product'));
     }
 
@@ -55,7 +50,8 @@ class AdminProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        return view('admin.products.edit', compact('product'));
     }
 
     /**
@@ -63,7 +59,11 @@ class AdminProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $validatedData = $this->validatedData($request, $product);
+        $product->update($validatedData);
+
+        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully!');
     }
 
     /**
@@ -71,6 +71,21 @@ class AdminProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::find($id);
+        $product->delete();
+        return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully!');
+    }
+
+    private function validatedData(Request $request, $product = null)
+    {
+        $rules = [
+            'name' => 'required|max:255',
+            'price' => 'required|numeric',
+            'description' => 'nullable',
+            'item_number' => 'required|unique:products,item_number' . ($product ? ',' . $product->id : ''),
+            'image' => 'nullable|url'
+        ];
+
+        return $request->validate($rules);
     }
 }
