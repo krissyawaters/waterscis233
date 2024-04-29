@@ -3,6 +3,7 @@
 
 @section('content')
 <h1> Products</h1>
+<a href="{{route('admin.products.create')}}" class="btn btn-primary">Create Product</a>
 <div class="container mt-4">
     <div class="row">
         @foreach ($products as $product)

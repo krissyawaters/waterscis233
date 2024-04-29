@@ -20,7 +20,7 @@ class AdminProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.products.create');
     }
 
     /**
@@ -28,8 +28,19 @@ class AdminProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'price' => 'required|numeric',
+            'description' => 'nullable',
+            'item_number' => 'required|unique:products',
+            'image' => 'nullable|url'
+        ]);
+    
+        Product::create($validatedData);
+    
+        return redirect()->route('admin.product.index')->with('success', 'Product created successfully!');
     }
+
 
     /**
      * Display the specified resource.
