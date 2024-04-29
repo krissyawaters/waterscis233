@@ -1,4 +1,4 @@
-@extends('layouts.products')
+@extends('layouts.admin')
 @section('title', 'Detail')
 
 
@@ -12,7 +12,7 @@
             <p class="card-text">{{ $product->description }}</p>
             <p class="card-text"><strong>Price:</strong> ${{ number_format($product->price, 2) }}</p>
             <p class="card-text"><strong>Item Number:</strong> {{ $product->item_number }}</p>
-            <a href="{{ route('products.index')}}" class="btn btn-primary">Back to all products</a>
+            <a href="{{ route('admin.products.index')}}" class="btn btn-primary">Back to all products</a>
         </div>
     </div>
 </div>
