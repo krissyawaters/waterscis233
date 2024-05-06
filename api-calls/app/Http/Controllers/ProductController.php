@@ -19,15 +19,16 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    /*public function create()
     {
         return view('products.create');
     }
+    */
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    /* public function store(Request $request)
     {
         $validatedData = $request->validate([
             'name' => 'required|max:255',
@@ -41,6 +42,7 @@ class ProductController extends Controller
     
         return redirect('/products');
     }
+    */
 
     /**
      * Display the specified resource.
@@ -53,15 +55,16 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    /*public function edit(Product $product)
     {
         return view('products.edit', compact('product'));
     }
+    /*
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+   /* public function update(Request $request, Product $product)
     {
         $validatedData = $request->validate([
             'name' => 'required|max:255',
@@ -73,13 +76,15 @@ class ProductController extends Controller
         $product->update($validatedData);
         return redirect('/products');
     }
+    */
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    /*public function destroy(Product $product)
     {
         $product->delete();
         return redirect('/products');
     }
+    */
 }
